@@ -93,7 +93,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4444491682364266191}
-  m_Material: {fileID: 13400000, guid: f563a26e34540c64eb00adc28fc98d74, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -132,4 +132,5 @@ MonoBehaviour:
   minZVelocityOnStart: 10
   maxZVelocityOnStart: 40
   ballSpeedIncrementOnCollide: 1.02
+  curBallSpeedIncrements: 0
   maxBallSpeedIncrements: 50

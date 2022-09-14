@@ -9,40 +9,52 @@ public class BallController : MonoBehaviour
     public float minZVelocityOnStart = 50;
     public float maxZVelocityOnStart = 75;
     public float ballSpeedIncrementOnCollide = 1.02f;
-    private int curBallSpeedIncrements;
+    public int curBallSpeedIncrements;
     public int maxBallSpeedIncrements = 50;
+    private float speed = 1f;
+    private bool paused;
+    private Vector3 startingVelo;
+
+    private int xDirection = 1;
+    private int zDirection = 1;
+
+    public Material ballMat;
     private Rigidbody rb;
     private GameManager gameManager;
 
-    private Vector3 pausedVelo;
-    private Vector3 pausedAngularVelo;
-    private Vector3 startingVelo;
+    private void OnApplicationQuit()
+    {
+        ballMat.SetColor("_EmissionColor", Color.white);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody>();
-        // Reset Material to be white initially
-        GetComponent<MeshRenderer>().material.color = Color.white;
     }
 
     public void Pause()
     {
-        pausedVelo = rb.velocity;
-        pausedAngularVelo = rb.angularVelocity;
+        paused = true;
         rb.isKinematic = true;
     }
 
     public void Unpause()
     {
-        rb.velocity = pausedVelo;
-        rb.angularVelocity = pausedAngularVelo;
+        paused = false;
         rb.isKinematic = false;
+    }
+
+    public void ResetBall()
+    {
+        transform.position = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
 
     public void Jumpstart()
     {
+        curBallSpeedIncrements = 0;
         float xVelo = Random.Range(minXVelocityOnStart, maxXVelocityOnStart);
         if (Random.Range(0, 2) == 0)
         {
@@ -57,14 +69,22 @@ public class BallController : MonoBehaviour
         rb.velocity = startingVelo;
     }
 
-    public void ResetBall()
+    public void SetSize(float size)
     {
-        transform.position = Vector3.zero;
-        rb.velocity = Vector3.zero;
+        transform.localScale = new Vector3(size, transform.localScale.y, size);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            zDirection *= -1;
+        }
+        else if (collision.gameObject.CompareTag("Paddle"))
+        {
+            xDirection *= -1;
+        }
+
         // Ball get's faster every collision (up to a max)
         if (curBallSpeedIncrements < maxBallSpeedIncrements)
         {
@@ -83,8 +103,13 @@ public class BallController : MonoBehaviour
         }
     }
 
-    public void SetSize(float size)
+    private void Update()
     {
-        transform.localScale = new Vector3(size, transform.localScale.y, size);
+        if (paused)
+            rb.velocity = Vector3.zero;
+        else
+            rb.velocity = new Vector3(
+            startingVelo.x * xDirection * speed, 0,
+            startingVelo.z * zDirection * speed);
     }
 }

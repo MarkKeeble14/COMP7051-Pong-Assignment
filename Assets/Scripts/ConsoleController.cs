@@ -16,6 +16,7 @@ public class ConsoleController : MonoBehaviour
 
     public BallController ball;
     public Material ballMat;
+    public GameManager gameManager;
 
     private void Update()
     {
@@ -76,12 +77,6 @@ public class ConsoleController : MonoBehaviour
     {
         if (input.Length == 0)
             return;
-        // Example Inputs 
-        // -> bgColor(blue)
-        // -> bgColor(Red)
-        // -> ballSpeed(20)
-        // -> BallRadius(5)
-        // -> GoalieSpeed(20)
         consoleTextDisplay.text += input + "\n>" + ParseInput(input);
         history.Add(input);
         historyIndex = history.Count;
@@ -98,8 +93,10 @@ public class ConsoleController : MonoBehaviour
                 "1. bgColor(color)\n" +
                 "2. ballSize(num)\n" +
                 "3. ballColor(color)\n" +
-                "4. help()\n" +
-                "5. exit()\n>";
+                "4. resetBall()\n" +
+                "4. restartGame()\n" +
+                "5. help()\n" +
+                "6. exit()\n>";
         }
         else if (input.Equals("exit()"))
         {
@@ -145,13 +142,25 @@ public class ConsoleController : MonoBehaviour
             Color color;
             if (ColorUtility.TryParseHtmlString(param, out color))
             {
-                ballMat.color = color;
+                ballMat.SetColor("_EmissionColor", color);
                 return "ball color changed to: " + color + "\n>";
             }
             else
             {
                 return "color not recognized\n>";
             }
+        }
+        else if (input.Length >= "resetBall".Length + 2
+          && input.Substring(0, "resetBall".Length).Equals("resetBall"))
+        {
+            gameManager.ResetBall();
+            return "ball reset\n>";
+        }
+        else if (input.Length >= "restartGame".Length + 2
+         && input.Substring(0, "restartGame".Length).Equals("restartGame"))
+        {
+            gameManager.RestartGame();
+            return "if you see this, something has gone terribly wrong\n>";
         }
         return "command not recognized; type 'help()' for a list of available commands\n>";
     }

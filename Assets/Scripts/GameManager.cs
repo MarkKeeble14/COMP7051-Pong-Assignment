@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI winnerAnnouncementText;
 
     public BallController ball;
+    public MenuHelper menuHelper;
 
     private void Start()
     {
@@ -66,16 +67,23 @@ public class GameManager : MonoBehaviour
         ball.Unpause();
     }
 
-    private void ResetBall()
+    public void ResetBall()
     {
         ball.ResetBall();
+        ball.Pause();
         StartCoroutine(StartBall());
+    }
+
+    public void RestartGame()
+    {
+        menuHelper.RestartGame();
     }
 
     private IEnumerator StartBall()
     {
         yield return new WaitForSeconds(startBallDelay);
 
+        ball.Unpause();
         ball.Jumpstart();
     }
 

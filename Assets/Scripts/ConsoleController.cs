@@ -17,9 +17,12 @@ public class ConsoleController : MonoBehaviour
     public BallController ball;
     public Material ballMat;
     public GameManager gameManager;
+    public ScrollRect display;
+    public bool open;
 
     private void Update()
     {
+        open = myConsole.activeSelf;
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (!myConsole.activeSelf)
@@ -52,18 +55,22 @@ public class ConsoleController : MonoBehaviour
     private IEnumerator RestartBall()
     {
         yield return new WaitForSecondsRealtime(waitTimeAfterConsoleClose);
-        Time.timeScale = 1;
+        if (!open)
+            Time.timeScale = 1;
     }
 
     private void OpenConsole()
     {
+        Time.timeScale = 0;
         myConsole.SetActive(true);
         consoleTextDisplay.text +=
               ">" + "type 'help()' for a list of available commands\n"
             + ">" + "type 'exit()' to close the console\n"
             + ">";
+        consoleInput.ActivateInputField();
         consoleInput.Select();
-        Time.timeScale = 0;
+        // https://stackoverflow.com/a/59968835
+        StartCoroutine(ApplyScrollPosition(display, 0));
     }
 
     public void CloseConsole()
@@ -77,12 +84,26 @@ public class ConsoleController : MonoBehaviour
     {
         if (input.Length == 0)
             return;
+        // https://stackoverflow.com/a/59968835
+        float backup = display.verticalNormalizedPosition;
+
         consoleTextDisplay.text += input + "\n>" + ParseInput(input);
         history.Add(input);
         historyIndex = history.Count;
         consoleInput.text = "";
         consoleInput.ActivateInputField();
         consoleInput.Select();
+
+        // https://stackoverflow.com/a/59968835
+        StartCoroutine(ApplyScrollPosition(display, backup));
+    }
+
+    // https://stackoverflow.com/a/59968835
+    IEnumerator ApplyScrollPosition(ScrollRect sr, float verticalPos)
+    {
+        yield return new WaitForEndOfFrame();
+        sr.verticalNormalizedPosition = verticalPos;
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)sr.transform);
     }
 
     private string ParseInput(string input)
@@ -91,12 +112,13 @@ public class ConsoleController : MonoBehaviour
         {
             return "available commands:\n" +
                 "1. bgColor(color)\n" +
-                "2. ballSize(num)\n" +
-                "3. ballColor(color)\n" +
-                "4. resetBall()\n" +
-                "4. restartGame()\n" +
-                "5. help()\n" +
-                "6. exit()\n>";
+                "2. ballColor(color)\n" +
+                "3. ballSize(num) - default is 3\n" +
+                "4. aiPaddleSpeed(num) - default is 50\n" +
+                "5. resetBall()\n" +
+                "6. restartGame()\n" +
+                "7. help()\n" +
+                "8. exit()\n>";
         }
         else if (input.Equals("exit()"))
         {
@@ -148,6 +170,21 @@ public class ConsoleController : MonoBehaviour
             else
             {
                 return "color not recognized\n>";
+            }
+        }
+        else if (input.Length >= "aiPaddleSpeed".Length + 3
+            && input.Substring(0, "aiPaddleSpeed".Length).Equals("aiPaddleSpeed"))
+        {
+            string param = input.Split('(', ')')[1];
+            float f;
+            if (float.TryParse(param, out f))
+            {
+                gameManager.SetAIPaddleSpeed(f);
+                return "ai paddle speed changed to " + f + "\n>";
+            }
+            else
+            {
+                return "invalid parameter\n>";
             }
         }
         else if (input.Length >= "resetBall".Length + 2

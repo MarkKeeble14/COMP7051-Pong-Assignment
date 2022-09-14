@@ -11,6 +11,7 @@ public class BallController : MonoBehaviour
     public float ballSpeedIncrementOnCollide = 1.02f;
     public int curBallSpeedIncrements;
     public int maxBallSpeedIncrements = 50;
+    public float curBallSpeedModifier = 1;
     private float speed = 1f;
     private bool paused;
     private Vector3 startingVelo;
@@ -55,6 +56,7 @@ public class BallController : MonoBehaviour
     public void Jumpstart()
     {
         curBallSpeedIncrements = 0;
+        curBallSpeedModifier = 1;
         float xVelo = Random.Range(minXVelocityOnStart, maxXVelocityOnStart);
         if (Random.Range(0, 2) == 0)
         {
@@ -88,7 +90,7 @@ public class BallController : MonoBehaviour
         // Ball get's faster every collision (up to a max)
         if (curBallSpeedIncrements < maxBallSpeedIncrements)
         {
-            rb.velocity = rb.velocity * ballSpeedIncrementOnCollide;
+            curBallSpeedModifier *= ballSpeedIncrementOnCollide;
             curBallSpeedIncrements++;
         }
 
@@ -109,7 +111,8 @@ public class BallController : MonoBehaviour
             rb.velocity = Vector3.zero;
         else
             rb.velocity = new Vector3(
-            startingVelo.x * xDirection * speed, 0,
-            startingVelo.z * zDirection * speed);
+            startingVelo.x * xDirection * speed * curBallSpeedModifier,
+            0,
+            startingVelo.z * zDirection * speed * curBallSpeedModifier);
     }
 }

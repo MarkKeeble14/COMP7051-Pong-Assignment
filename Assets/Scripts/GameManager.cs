@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     public BallController ball;
     public MenuHelper menuHelper;
+    public ConsoleController console;
 
     private void Start()
     {
@@ -117,6 +119,17 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         winConText.text = "First to " + scoreToWin.ToString() + " wins!";
+
+        if (console.open)
+            return;
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ToggleP1AI();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ToggleP2AI();
+        }
     }
 
     public void ToggleP1AI()
@@ -149,5 +162,11 @@ public class GameManager : MonoBehaviour
             P2GoaliePlayerControl.enabled = true;
             P2AIEnabled = false;
         }
+    }
+
+    internal void SetAIPaddleSpeed(float f)
+    {
+        P1GoalieAIControl.speed = f;
+        P2GoalieAIControl.speed = f;
     }
 }

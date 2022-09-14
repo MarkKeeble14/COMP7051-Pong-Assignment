@@ -8,5 +8,6 @@ public class MenuHelper : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene("SampleScene");
+        Time.timeScale = 1;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class AIControlGoalie : MonoBehaviour
 {
     private Transform ball;
-    private float speed;
+    public float speed;
     private ControlGoalie playerGoalie;
 
     // Start is called before the first frame update

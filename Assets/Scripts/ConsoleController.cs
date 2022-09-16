@@ -114,11 +114,13 @@ public class ConsoleController : MonoBehaviour
                 "1. bgColor(color)\n" +
                 "2. ballColor(color)\n" +
                 "3. ballSize(num) - default is 3\n" +
-                "4. aiPaddleSpeed(num) - default is 50\n" +
-                "5. resetBall()\n" +
-                "6. restartGame()\n" +
-                "7. help()\n" +
-                "8. exit()\n>";
+                "4. ballSpeed(num) - default is 1\n" +
+                "5. ballRotation(bool)\n" +
+                "6. aiPaddleSpeed(num) - default is 50\n" +
+                "7. resetBall()\n" +
+                "8. restartGame()\n" +
+                "9. help()\n" +
+                "10. exit()\n>";
         }
         else if (input.Equals("exit()"))
         {
@@ -156,6 +158,21 @@ public class ConsoleController : MonoBehaviour
                 return "invalid parameter\n>";
             }
         }
+        else if (input.Length >= "ballSpeed".Length + 3
+            && input.Substring(0, "ballSpeed".Length).Equals("ballSpeed"))
+        {
+            string param = input.Split('(', ')')[1];
+            float f;
+            if (float.TryParse(param, out f))
+            {
+                ball.SetSpeed(f);
+                return "ball speed changed to " + f + "\n>";
+            }
+            else
+            {
+                return "invalid parameter\n>";
+            }
+        }
         else if (input.Length >= "ballColor".Length + 3
             && input.Substring(0, "ballColor".Length).Equals("ballColor"))
         {
@@ -170,6 +187,23 @@ public class ConsoleController : MonoBehaviour
             else
             {
                 return "color not recognized\n>";
+            }
+        }
+
+        else if (input.Length >= "ballRotation".Length + 3
+            && input.Substring(0, "ballRotation".Length).Equals("ballRotation"))
+        {
+            // User is trying to change ball color
+            string param = input.Split('(', ')')[1];
+            bool r;
+            if (bool.TryParse(param, out r))
+            {
+                ball.SetBallRotationEnabled(r);
+                return "ball rotation " + (r ? "enabled" : "disabled") + "\n>";
+            }
+            else
+            {
+                return "param not recognized as a bool\n>";
             }
         }
         else if (input.Length >= "aiPaddleSpeed".Length + 3

@@ -1116,44 +1116,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 2113046391}
     m_Modifications:
     - target: {fileID: 4444491682364266185, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: ballMat
-      value: 
-      objectReference: {fileID: 2100000, guid: 5938010da2fb5ad42ba455a6fe421298, type: 2}
+      propertyPath: maxXVelocityOnStart
+      value: 75
+      objectReference: {fileID: 0}
     - target: {fileID: 4444491682364266185, guid: d88e024673f59d840adae9400c31611b, type: 3}
       propertyPath: maxZVelocityOnStart
-      value: 40
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4444491682364266185, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: minZVelocityOnStart
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444491682364266185, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: maxBallSpeedIncrements
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444491682364266185, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: ballSpeedIncrementOnCollide
-      value: 1.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444491682364266186, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: m_Constraints
-      value: 116
+      propertyPath: minXVelocityOnStart
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4444491682364266187, guid: d88e024673f59d840adae9400c31611b, type: 3}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444491682364266187, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444491682364266187, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444491682364266187, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4444491682364266187, guid: d88e024673f59d840adae9400c31611b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1195,27 +1171,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4444491682364266188, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    - target: {fileID: 4444491682364266190, guid: d88e024673f59d840adae9400c31611b, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4444491682364266191, guid: d88e024673f59d840adae9400c31611b, type: 3}
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4444491682364266190, guid: d88e024673f59d840adae9400c31611b, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d88e024673f59d840adae9400c31611b, type: 3}
 --- !u!114 &350718840 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4444491682364266185, guid: d88e024673f59d840adae9400c31611b, type: 3}
   m_PrefabInstance: {fileID: 350718839}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092392384}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e74fb2b749a36b342823a98637438522, type: 3}
@@ -3152,7 +3119,7 @@ Transform:
   m_GameObject: {fileID: 1202898108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 45, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 5, z: 10}
+  m_LocalScale: {x: 1, y: 5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2113046391}
@@ -3172,7 +3139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerAxis: P2Vertical
   speed: 50
-  maxZ: 20
+  maxZ: 19
 --- !u!114 &1202898114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4036,7 +4003,7 @@ Transform:
   m_GameObject: {fileID: 1483327859}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -45, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 5, z: 10}
+  m_LocalScale: {x: 1, y: 5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2113046391}
@@ -4056,7 +4023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerAxis: P1Vertical
   speed: 50
-  maxZ: 20
+  maxZ: 19
 --- !u!114 &1483327865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4239,7 +4206,7 @@ Transform:
   m_GameObject: {fileID: 1625344924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 55, y: 0, z: 1}
-  m_LocalScale: {x: 5, y: 5, z: 45}
+  m_LocalScale: {x: 5, y: 5, z: 47.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2113046391}
@@ -4336,7 +4303,7 @@ Transform:
   m_GameObject: {fileID: 1712992066}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -55, y: 0, z: 1}
-  m_LocalScale: {x: 5, y: 5, z: 45}
+  m_LocalScale: {x: 5, y: 5, z: 47.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2113046391}
@@ -5697,24 +5664,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076487657}
   m_CullTransparentMesh: 1
---- !u!1 &2092392384 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4444491682364266191, guid: d88e024673f59d840adae9400c31611b, type: 3}
-  m_PrefabInstance: {fileID: 350718839}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &2092392389
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2092392384}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2113046390
 GameObject:
   m_ObjectHideFlags: 0

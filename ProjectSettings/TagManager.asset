@@ -8,6 +8,7 @@ TagManager:
   - RightGoal
   - Paddle
   - Wall
+  - PaddleGuard
   layers:
   - Default
   - TransparentFX

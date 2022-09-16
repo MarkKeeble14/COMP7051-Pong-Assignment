@@ -6,7 +6,7 @@ public class ControlGoalie : MonoBehaviour
 {
     public string controllerAxis;
     public float speed;
-    public int maxZ = 15;
+    public float maxZ = 15;
 
     // Update is called once per frame
     void Update()

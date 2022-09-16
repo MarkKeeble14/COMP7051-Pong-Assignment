@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class BallController : MonoBehaviour
     public int curBallSpeedIncrements;
     public int maxBallSpeedIncrements = 50;
     public float curBallSpeedModifier = 1;
-    private float speed = 1f;
+    public float speed = 1f;
     private bool paused;
     private Vector3 startingVelo;
 
@@ -57,13 +58,13 @@ public class BallController : MonoBehaviour
     {
         curBallSpeedIncrements = 0;
         curBallSpeedModifier = 1;
-        float xVelo = Random.Range(minXVelocityOnStart, maxXVelocityOnStart);
-        if (Random.Range(0, 2) == 0)
+        float xVelo = UnityEngine.Random.Range(minXVelocityOnStart, maxXVelocityOnStart);
+        if (UnityEngine.Random.Range(0, 2) == 0)
         {
             xVelo *= -1;
         }
-        float zVelo = Random.Range(minZVelocityOnStart, maxZVelocityOnStart);
-        if (Random.Range(0, 2) == 0)
+        float zVelo = UnityEngine.Random.Range(minZVelocityOnStart, maxZVelocityOnStart);
+        if (UnityEngine.Random.Range(0, 2) == 0)
         {
             zVelo *= -1;
         }
@@ -76,6 +77,11 @@ public class BallController : MonoBehaviour
         transform.localScale = new Vector3(size, transform.localScale.y, size);
     }
 
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -84,7 +90,23 @@ public class BallController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Paddle"))
         {
-            xDirection *= -1;
+            if (transform.position.z <
+                collision.transform.position.z + (collision.transform.localScale.z / 2) + (transform.localScale.z / 1.5f))
+            {
+                if (transform.position.z >
+                    collision.transform.position.z - (collision.transform.localScale.z / 2) - (transform.localScale.z / 1.5f))
+                {
+                    xDirection *= -1;
+                }
+                else
+                {
+                    zDirection *= -1;
+                }
+            }
+            else
+            {
+                zDirection *= -1;
+            }
         }
 
         // Ball get's faster every collision (up to a max)
@@ -114,5 +136,18 @@ public class BallController : MonoBehaviour
             startingVelo.x * xDirection * speed * curBallSpeedModifier,
             0,
             startingVelo.z * zDirection * speed * curBallSpeedModifier);
+    }
+
+    public void SetBallRotationEnabled(bool r)
+    {
+        if (r)
+        {
+            rb.freezeRotation = false;
+        }
+        else
+        {
+            transform.eulerAngles = Vector3.zero;
+            rb.freezeRotation = true;
+        }
     }
 }
